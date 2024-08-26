@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção MEINV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .btn-group {
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:nth-child(1) {
+            background-color: #4CAF50;
+        }
+        button:nth-child(2) {
+            background-color: #f44336;
+        }
+        button:nth-child(3) {
+            background-color: #2196F3;
+        }
+        button:nth-child(4) {
+            background-color: #000000;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 4px;
+            white-space: pre-line;
+        }
+        .output-group {
+            margin-bottom: 10px;
+        }
+        .output-group label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manutenção MEINV</h1>
+    <form id="maintenanceForm">
+        <div class="form-group">
+            <label for="marcaModeloDefeito">Marca e modelo do equipamento defeituoso:</label>
+            <input type="text" id="marcaModeloDefeito" name="Marca e modelo do equipamento defeituoso">
+        </div>
+        <div class="form-group">
+            <label for="acessoriosRetirados">Acessórios retirados:</label>
+            <input type="text" id="acessoriosRetirados" name="Acessórios retirados">
+        </div>
+        <div class="form-group">
+            <label for="numSerieDefeito">Numero de série do equipamento defeituoso:</label>
+            <input type="text" id="numSerieDefeito" name="Número de série do equipamento defeituoso">
+        </div>
+        <div class="form-group">
+            <label for="patrimonioDefeito">Patrimônio do equipamento defeituoso:</label>
+            <input type="text" id="patrimonioDefeito" name="Patrimônio do equipamento defeituoso">
+        </div>
+        <div class="form-group">
+            <label for="problemaIdentificado">Problema identificado:</label>
+            <textarea id="problemaIdentificado" name="Problema identificado"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="procedimentos">Procedimentos efetuados para tentar solucionar o problema:</label>
+            <textarea id="procedimentos" name="Procedimentos efetuados para tentar solucionar o problema"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Foi colocado um equipamento de empréstimo?</label>
+            <input type="radio" id="equipamentoEmprestimoSim" name="Foi colocado um equipamento de empréstimo?" value="Sim">
+            <label for="equipamentoEmprestimoSim">Sim</label>
+            <input type="radio" id="equipamentoEmprestimoNao" name="Foi colocado um equipamento de empréstimo?" value="Não">
+            <label for="equipamentoEmprestimoNao">Não</label>
+        </div>
+        <div class="form-group" id="emprestimoDetails" style="display: none;">
+            <div class="form-group">
+                <label for="marcaModeloEmprestimo">Marca e modelo do equipamento emprestado:</label>
+                <input type="text" id="marcaModeloEmprestimo" name="Marca e modelo do equipamento emprestado">
+            </div>
+            <div class="form-group">
+                <label for="numSerieEmprestimo">Numero de série do equipamento emprestado:</label>
+                <input type="text" id="numSerieEmprestimo" name="Número de série do equipamento emprestado">
+            </div>
+            <div class="form-group">
+                <label for="patrimonioEmprestimo">Patrimônio do equipamento emprestado:</label>
+                <input type="text" id="patrimonioEmprestimo" name="Patrimônio do equipamento emprestado">
+            </div>
+        </div>
+        <div class="btn-group">
+            <button type="button" onclick="submitForm()">Enviar</button>
+            <button type="reset" onclick="resetForm()">Limpar</button>
+            <button type="button" onclick="copyToClipboard()">Copiar</button>
+            <button type="button" class="voltar" onclick="window.location.href='Script Suporte Técnico.html'">Voltar</button>
+        </div>
+    </form>
+    <div id="output"></div>
+    </div>
+
+    <script>
+        document.getElementsByName('Foi colocado um equipamento de empréstimo?').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const emprestimoDetails = document.getElementById('emprestimoDetails');
+                if (this.value === 'Sim') {
+                    emprestimoDetails.style.display = 'block';
+                } else {
+                    emprestimoDetails.style.display = 'none';
+                    document.getElementById('marcaModeloEmprestimo').value = '';
+                    document.getElementById('numSerieEmprestimo').value = '';
+                    document.getElementById('patrimonioEmprestimo').value = '';
+                }
+            });
+        });
+
+        function submitForm() {
+            const form = document.getElementById('maintenanceForm');
+            const formData = new FormData(form);
+            let output = '';
+
+            formData.forEach((value, key) => {
+                output += `${key}: ${value}\n\n`;
+            });
+
+            document.getElementById('output').innerText = output;
+        }
+
+        function resetForm() {
+            document.getElementById('output').innerText = '';
+            document.getElementById('emprestimoDetails').style.display = 'none';
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            const text = output.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Dados copiados para a área de transferência.');
+            });
+        }
+    </script>
+</body>
+</html>

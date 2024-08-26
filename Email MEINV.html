@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-mail Manutenção MEINV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        td.bold, th {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-mail Manutenção MEINV</h1>
+    <form id="inventarioForm">
+        <label for="solicitante">Solicitante:</label>
+        <input type="text" id="solicitante" name="solicitante">
+
+        <label for="razaoSocial">Razão Social:</label>
+        <input type="text" id="razaoSocial" name="razaoSocial" value="HOSPITAL ALEMÃO OSWALDO CRUZ" readonly>
+
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" id="cnpj" name="cnpj" value="60.726.502/0007-11" readonly>
+
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" value="Rua Maestro Cardim, 1012 - Bela Vista" readonly>
+
+        <label for="cidadeUF">Cidade/UF:</label>
+        <input type="text" id="cidadeUF" name="cidadeUF" value="São Paulo - SP" readonly>
+
+        <label for="cep">Cep:</label>
+        <input type="text" id="cep" name="cep" value="01323-001" readonly>
+
+        <label for="analista">Analista:</label>
+        <input type="text" id="analista" name="analista">
+
+        <label for="contatoCel">Contato Cel:</label>
+        <input type="text" id="contatoCel" name="contatoCel">
+
+        <label for="chamado">Chamado:</label>
+        <input type="text" id="chamado" name="chamado">
+
+        <label for="marcaModelo">Marca/Modelo:</label>
+        <input type="text" id="marcaModelo" name="marcaModelo">
+
+        <label for="patrimonio">Patrimônio:</label>
+        <input type="text" id="patrimonio" name="patrimonio">
+
+        <label for="numeroSerial">N° Serial:</label>
+        <input type="text" id="numeroSerial" name="numeroSerial">
+
+        <label for="motivo">Motivo:</label>
+        <textarea id="motivo" name="motivo"></textarea>
+
+        <label for="observacao">Observação:</label>
+        <textarea id="observacao" name="observacao"></textarea>
+
+        <div id="buttons">
+            <button type="button" onclick="gerarTabela()">Enviar</button>
+            <button type="button" onclick="limparFormulario()">Limpar</button>
+            <button type="button" onclick="copiarTabela()">Copiar</button>
+            <button type="button" onclick="voltar()">Voltar</button>
+        </div>
+    </form>
+
+    <div id="tabelaResultado"></div>
+
+    <script>
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function gerarTabela() {
+            const form = document.getElementById('inventarioForm');
+            const formData = new FormData(form);
+            let table = '<p>Por gentileza, retirar o equipamento para manutenção, segue os dados:</p><table>';
+
+            formData.forEach((value, key) => {
+                let boldClass = '';
+                if (['razaoSocial', 'cnpj', 'endereco', 'cidadeUF', 'cep', 'contatoCel', 'analista'].includes(key)) {
+                    boldClass = 'bold';
+                }
+                table += `<tr><td class="bold">${capitalizeFirstLetter(key)}</td><td class="${boldClass}">${value}</td></tr>`;
+            });
+
+            table += '</table><p>Qualquer dúvida estou à disposição.</p>';
+            document.getElementById('tabelaResultado').innerHTML = table;
+        }
+
+        function limparFormulario() {
+            document.getElementById('inventarioForm').reset();
+            document.getElementById('tabelaResultado').innerHTML = '';
+        }
+
+        function copiarTabela() {
+            const tabela = document.getElementById('tabelaResultado');
+            const range = document.createRange();
+            range.selectNode(tabela);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            alert('Tabela copiada!');
+        }
+
+        function voltar() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

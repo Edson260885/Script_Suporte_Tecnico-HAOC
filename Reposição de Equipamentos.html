@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reposição de Equipamentos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type=text], input[type=number], select {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        select option:first-child {
+            color: #888;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button[type="button"] {
+            background-color: #f44336;
+            color: white;
+        }
+        button#copyButton {
+            background-color: #2196F3;
+            color: white;
+        }    
+        button.voltar {
+            background-color: #000000;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: 4px;
+            white-space: pre-line;
+        }
+        .output-group {
+            margin-bottom: 10px;
+        }
+        .output-group label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reposição de Equipamentos</h2>
+        <form id="inventoryForm">
+            <div class="form-group">
+                <label for="os">OS:</label>
+                <input type="text" id="os" name="os" required>
+            </div>
+            <div class="form-group">
+                <label for="setor">Setor:</label>
+                <input type="text" id="setor" name="setor">
+            </div>
+            <div class="form-group">
+                <label for="unidade">Unidade:</label>
+                <select id="unidade" name="unidade">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="Paulista">Paulista</option>
+                    <option value="Paulista 475">Paulista 475</option>
+                    <option value="Paulista 500">Paulista 500</option>
+                    <option value="Campo Belo">Campo Belo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="andar">Andar:</label>
+                <select id="andar" name="andar">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="S4">S4</option>
+                    <option value="S3">S3</option>
+                    <option value="S2">S2</option>
+                    <option value="S1">S1</option>
+                    <option value="TI">TI</option>
+                    <option value="INT">INT</option>
+                    <option value="TS">TS</option>
+                    <option value="Térreo">Térreo</option>
+                    <option value="Mezanino">Mezanino</option>
+                    <option value="1°">1°</option>
+                    <option value="2°">2°</option>
+                    <option value="3°">3°</option>
+                    <option value="4°">4°</option>
+                    <option value="5°">5°</option>
+                    <option value="6°">6°</option>
+                    <option value="7°">7°</option>
+                    <option value="8°">8°</option>
+                    <option value="9°">9°</option>
+                    <option value="10°">10°</option>
+                    <option value="11°">11°</option>
+                    <option value="12°">12°</option>
+                    <option value="13°">13°</option>
+                    <option value="14°">14°</option>
+                    <option value="15°">15°</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bloco">Bloco:</label>
+                <select id="bloco" name="bloco">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="item">Item:</label>
+                <input type="text" id="item" name="item" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" name="quantidade" min="1" required>
+            </div>
+            <button type="submit">Enviar</button>
+            <button type="button" onclick="clearForm()">Limpar</button>
+            <button type="button" id="copyButton" onclick="copyToClipboard()">Copiar</button>
+            <button type="button" class="voltar" onclick="window.location.href='Script Suporte Técnico.html'">Voltar</button>
+        </form>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        document.getElementById('inventoryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let os = document.getElementById('os').value;
+            let setor = document.getElementById('setor').value;
+            let unidade = document.getElementById('unidade').value;
+            let andar = document.getElementById('andar').value;
+            let bloco = document.getElementById('bloco').value;
+            let item = document.getElementById('item').value;
+            let quantidade = document.getElementById('quantidade').value;
+
+            let output = `
+                OS: ${os}
+                Setor: ${setor}
+                Unidade: ${unidade}
+                Andar: ${andar}
+                Bloco: ${bloco}
+                Item: ${item}
+                Quantidade: ${quantidade}
+            `;
+
+            document.getElementById('output').innerText = output;
+        });
+
+        function clearForm() {
+            document.getElementById('inventoryForm').reset();
+            document.getElementById('output').innerText = '';
+        }
+
+        function copyToClipboard() {
+            let outputText = document.getElementById('output').innerText;
+            navigator.clipboard.writeText(outputText).then(function() {
+                alert('Dados copiados para a área de transferência.');
+            }, function(err) {
+                console.error('Erro ao copiar: ', err);
+            });
+        
+  };
+    </script>
+</body>
+</html>

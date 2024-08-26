@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Suporte Técnico - HAOC</title>
+    <!-- Estilos CSS -->
+    <style>
+        /* Define o estilo para o corpo da página */
+        body {
+            font-family: Arial, sans-serif; /* Define a fonte */
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Cor de fundo */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh; /* Altura da página */
+        }
+
+        /* Estilo para o título */
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 40px;
+            font-size: 2em; /* Tamanho da fonte do título */
+        }
+
+        /* Contêiner para os botões */
+        .button-container {
+            display: flex;
+            gap: 30px; /* Espaço entre os botões */
+            margin-top: 20px; /* Margem superior para ajustar a posição */
+        }
+
+        /* Estilo para os botões */
+        .button-container button {
+            width: 200px; /* Largura do botão */
+            height: 100px; /* Altura do botão */
+            font-size: 18px; /* Tamanho da fonte do texto do botão */
+            border: none; /* Remove a borda padrão */
+            cursor: pointer; /* Define o cursor como pointer (mãozinha) */
+            border-radius: 5px; /* Bordas arredondadas */
+            background-color: #007BFF; /* Cor de fundo do botão */
+            color: white; /* Cor do texto */
+            transition: background-color 0.3s ease; /* Transição suave para a mudança de cor */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center; /* Centraliza o texto */
+        }
+
+        /* Estilo para o hover (quando o mouse passa por cima) dos botões */
+        .button-container button:hover {
+            background-color: #0056b3; /* Cor de fundo quando o mouse está sobre o botão */
+        }
+    </style>
+</head>
+<body>
+    <!-- Título da página -->
+    <h1>Script Suporte Técnico - HAOC</h1>
+    <!-- Contêiner dos botões -->
+    <div class="button-container">
+        <!-- Botão de Adiantamento de Itens -->
+        <button onclick="location.href='Adiantamento de Itens.html'">Adiantamento de Itens</button>
+        <!-- Botão de Reposição de Equipamentos -->
+        <button onclick="location.href='Reposição de Equipamentos.html'">Reposição de Equipamentos</button>
+        <!-- Botão de Manutenção MEINV -->
+        <button onclick="location.href='Manutenção MEINV.html'">Manutenção MEINV</button>
+    </div>
+</body>
+</html>
